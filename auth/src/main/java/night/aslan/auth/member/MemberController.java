@@ -1,7 +1,8 @@
 package night.aslan.auth.member;
 
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.Advice;
+import night.aslan.auth.Form.ResponseForm;
+import night.aslan.auth.member.Dto.MemberLoginDto;
 import night.aslan.auth.member.Dto.MemberSignUpDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +13,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String login(){
-        return "ok";
+    public ResponseForm login(@RequestBody MemberLoginDto memberLoginDto) {
+        return  memberService.login(memberLoginDto);
     }
 
     @PostMapping("/signup")
