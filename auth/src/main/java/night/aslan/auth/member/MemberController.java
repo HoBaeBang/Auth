@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseForm login(@RequestBody MemberLoginDto memberLoginDto) {
         return  memberService.login(memberLoginDto);
     }
