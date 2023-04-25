@@ -1,6 +1,7 @@
 package night.aslan.auth.member;
 
 import lombok.*;
+import night.aslan.auth.emailCertification.EmailCertificationEntity;
 import night.aslan.auth.member.Dto.MemberSignUpDto;
 import night.aslan.auth.role.Role;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,6 +51,10 @@ public class MemberEntity implements UserDetails {
 
     @Column(name = "update_at")
     LocalDateTime memberUpdateAt;
+
+    @OneToOne
+    @JoinColumn(name = "fk_email_cert")
+    EmailCertificationEntity emailCertificationEntity;
 
     public void signUoDtoToEntity(MemberSignUpDto dto) {
         this.setMemberId(dto.getMemberId());
