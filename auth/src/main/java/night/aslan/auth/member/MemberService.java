@@ -3,7 +3,7 @@ package night.aslan.auth.member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import night.aslan.auth.Form.ResponseForm;
-import night.aslan.auth.emailValidation.EmailValidation;
+import night.aslan.auth.email.EmailValidation;
 import night.aslan.auth.jwt.JwtTokenProvider;
 import night.aslan.auth.member.Dto.MemberLoginDto;
 import night.aslan.auth.member.Dto.MemberSignUpDto;
@@ -80,6 +80,7 @@ public class MemberService implements UserDetailsService {
                 // -> 전체 로직을 생각해서 추후 성능개선 필요
                 // -> 불필요한 쿼리 삭제
 //                Optional<MemberEntity> member = memberCustomRepository.findLoginMember(dto);
+                //Todo 로직 개선 필요
                 if (passwordCheck(dto.getMemberPwd(),member.get().memberPwd)) {
                     responseForm.setHttpStatus(HttpStatus.OK);
                     responseForm.setResult(member.get());
@@ -95,6 +96,7 @@ public class MemberService implements UserDetailsService {
         return responseForm;
     }
 
+    //TOdo 해당 내용 따로 알아보기 - security 내용
     @Override       //security 때문
     public MemberEntity loadUserByUsername(String username) throws UsernameNotFoundException {
         //MemberEntity 정보 조회
@@ -123,7 +125,8 @@ public class MemberService implements UserDetailsService {
         return null;
     }
 
-    public boolean passwordCheck(String dtoPwd,String memberPwd) {
+
+    public boolean passwordCheck(String dtoPwd,String memberPwd) {  //암호화된 비밀번호 일치 여부 확인
         return passwordEncoder.matches(dtoPwd, memberPwd);
     }
 }
