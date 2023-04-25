@@ -1,4 +1,4 @@
-package night.aslan.auth.emailValidation;
+package night.aslan.auth.email;
 
 import lombok.RequiredArgsConstructor;
 
