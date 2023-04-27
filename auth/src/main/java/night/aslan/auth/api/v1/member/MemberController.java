@@ -1,12 +1,12 @@
-package night.aslan.auth.member;
+package night.aslan.auth.api.v1.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import night.aslan.auth.Form.ResponseForm;
-import night.aslan.auth.email.EmailUtils;
-import night.aslan.auth.emailCertification.cert.CertDto;
-import night.aslan.auth.member.Dto.MemberLoginDto;
-import night.aslan.auth.member.Dto.MemberSignUpDto;
+import night.aslan.auth.api.v1.member.Dto.MemberLoginDto;
+import night.aslan.auth.api.v1.member.Dto.MemberSignUpDto;
+import night.aslan.auth.api.v1.email.EmailUtils;
+import night.aslan.auth.api.v1.email.emailCertification.cert.CertDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

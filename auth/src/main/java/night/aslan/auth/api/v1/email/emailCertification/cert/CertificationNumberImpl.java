@@ -1,9 +1,9 @@
-package night.aslan.auth.emailCertification.cert;
+package night.aslan.auth.api.v1.email.emailCertification.cert;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import night.aslan.auth.emailCertification.EmailCertificationEntity;
-import night.aslan.auth.emailCertification.EmailCertificationRepositoryCustom;
+import night.aslan.auth.api.v1.email.emailCertification.EmailCertificationEntity;
+import night.aslan.auth.api.v1.email.emailCertification.EmailCertificationRepositoryCustom;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 

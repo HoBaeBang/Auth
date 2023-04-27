@@ -1,7 +1,8 @@
-package night.aslan.auth.emailCertification;
+package night.aslan.auth.api.v1.email.emailCertification;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import night.aslan.auth.emailCertification.QEmailCertificationEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

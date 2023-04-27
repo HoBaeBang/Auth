@@ -1,4 +1,4 @@
-package night.aslan.auth.emailCertification.cert;
+package night.aslan.auth.api.v1.email.emailCertification.cert;
 
 public interface CertificationNumber {
     public int createCertificationNumber();

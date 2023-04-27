@@ -1,4 +1,4 @@
-package night.aslan.auth.email;
+package night.aslan.auth.api.v1.email;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,7 +23,7 @@ public class EmailUtilsImpl implements EmailUtils {
         try {
             helper.setTo(emailAddress);
             helper.setSubject(subject);
-            helper.setText(body);
+            helper.setText(body,true);
             result.put("resultCode", 200);
         } catch (MessagingException e) {
             e.printStackTrace();

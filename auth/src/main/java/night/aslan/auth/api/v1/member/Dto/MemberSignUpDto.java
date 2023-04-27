@@ -1,11 +1,6 @@
-package night.aslan.auth.member.Dto;
+package night.aslan.auth.api.v1.member.Dto;
 
 import lombok.*;
-import night.aslan.auth.member.MemberEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-
-import javax.persistence.Column;
 
 @Getter
 @Setter

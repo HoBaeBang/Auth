@@ -1,9 +1,9 @@
-package night.aslan.auth.member;
+package night.aslan.auth.api.v1.member;
 
 import lombok.*;
-import night.aslan.auth.emailCertification.EmailCertificationEntity;
-import night.aslan.auth.member.Dto.MemberSignUpDto;
-import night.aslan.auth.role.Role;
+import night.aslan.auth.api.v1.member.Dto.MemberSignUpDto;
+import night.aslan.auth.api.v1.member.role.Role;
+import night.aslan.auth.api.v1.email.emailCertification.EmailCertificationEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,4 @@
-package night.aslan.auth.emailCertification;
-
-import night.aslan.auth.emailCertification.cert.CertDto;
+package night.aslan.auth.api.v1.email.emailCertification;
 
 import java.util.Optional;
 

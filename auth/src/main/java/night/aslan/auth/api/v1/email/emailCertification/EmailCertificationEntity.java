@@ -1,8 +1,7 @@
-package night.aslan.auth.emailCertification;
+package night.aslan.auth.api.v1.email.emailCertification;
 
 import lombok.*;
-import night.aslan.auth.emailCertification.cert.CertDto;
-import night.aslan.auth.member.MemberEntity;
+import night.aslan.auth.api.v1.member.MemberEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

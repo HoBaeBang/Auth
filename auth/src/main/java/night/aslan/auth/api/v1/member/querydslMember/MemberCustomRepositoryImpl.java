@@ -1,9 +1,9 @@
-package night.aslan.auth.member.querydslMember;
+package night.aslan.auth.api.v1.member.querydslMember;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import night.aslan.auth.member.Dto.MemberLoginDto;
-import night.aslan.auth.member.MemberEntity;
+import night.aslan.auth.api.v1.member.Dto.MemberLoginDto;
+import night.aslan.auth.api.v1.member.MemberEntity;
 import night.aslan.auth.member.QMemberEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;

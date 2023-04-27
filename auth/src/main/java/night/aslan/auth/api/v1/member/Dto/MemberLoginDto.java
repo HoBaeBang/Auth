@@ -1,4 +1,4 @@
-package night.aslan.auth.member.Dto;
+package night.aslan.auth.api.v1.member.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

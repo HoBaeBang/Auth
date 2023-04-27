@@ -1,4 +1,4 @@
-package night.aslan.auth.role;
+package night.aslan.auth.api.v1.member.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

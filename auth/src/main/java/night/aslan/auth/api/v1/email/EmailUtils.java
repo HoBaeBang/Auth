@@ -1,4 +1,4 @@
-package night.aslan.auth.email;
+package night.aslan.auth.api.v1.email;
 
 import java.util.Map;
 
