@@ -9,4 +9,6 @@ public interface EmailCertificationRepositoryCustom {
 
     Optional<EmailCertificationEntity> findCertificateByEmail(String email);
 
+    Long accessEmailCertification(String email);
+
 }

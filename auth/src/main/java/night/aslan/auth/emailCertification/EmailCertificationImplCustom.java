@@ -2,7 +2,6 @@ package night.aslan.auth.emailCertification;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import night.aslan.auth.emailCertification.cert.CertDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -29,7 +28,16 @@ public class EmailCertificationImplCustom implements EmailCertificationRepositor
         return Optional.ofNullable(emailCertEntity);
     }
 
+    @Override
+    public Long accessEmailCertification(String email) {
+        QEmailCertificationEntity emailCert = QEmailCertificationEntity.emailCertificationEntity;
+        Long emailCertEntityId = jpaQueryFactory.update(emailCert)
+                .set(emailCert.emailCertificationEnabled, true)
+                .where(emailCert.emailCertificationEmail.eq(email))
+                .execute();
 
+        return emailCertEntityId;
+    }
 
 
 }

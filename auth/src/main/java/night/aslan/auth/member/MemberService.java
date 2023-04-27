@@ -10,6 +10,7 @@ import night.aslan.auth.emailCertification.EmailCertificationImplCustom;
 import night.aslan.auth.emailCertification.EmailCertificationRepository;
 import night.aslan.auth.emailCertification.cert.CertDto;
 import night.aslan.auth.emailCertification.cert.CertificationNumber;
+import night.aslan.auth.emailCertification.cert.CertificationNumberImpl;
 import night.aslan.auth.jwt.JwtTokenProvider;
 import night.aslan.auth.member.Dto.MemberLoginDto;
 import night.aslan.auth.member.Dto.MemberSignUpDto;
@@ -38,6 +39,7 @@ public class MemberService implements UserDetailsService {
     private final CertificationNumber certificationNumber;
     private final EmailCertificationImplCustom emailCertificationImplCustom;
     private final EmailCertificationRepository emailCertificationRepository;
+
 
     /**
      * 회원가입
@@ -106,7 +108,11 @@ public class MemberService implements UserDetailsService {
         return responseForm;
     }
 
-    //TODO: 인증 번호 생성 및 발송 서비스 생성
+    /**
+     * 인증번호 발송 서비스
+     * @param certDto
+     * @return
+     */
     public String sendCertNumber(CertDto certDto) {
         try {
             int certCode = certificationNumber.createCertificationNumber();
@@ -124,9 +130,19 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-//    public String checkCertificationNumber() {
-//
-//    }
+    /**
+     * 인증 번호 확인
+     * @param certDto
+     * @return
+     */
+    public String checkCertificationNumber(CertDto certDto) {
+        if (certificationNumber.checkCertificationNumber(certDto)) {
+            emailCertificationImplCustom.accessEmailCertification(certDto.getMemberId());
+            return "인증에 성공하였습니다.";
+        } else {
+            return "인증번호가 올바르지 않습니다.";
+        }
+    }
 
     /**
      * 비밀번호 확인 메서드

@@ -39,5 +39,11 @@ public class MemberController {
     public String sendCertNumber(@RequestBody CertDto certDto) {
         return memberService.sendCertNumber(certDto);
     }
+
+    @PostMapping("/check/cert-number")
+    public String checkCodeNumber(@RequestBody CertDto certDto) {
+        return memberService.checkCertificationNumber(certDto);
+    }
+
 }
 
