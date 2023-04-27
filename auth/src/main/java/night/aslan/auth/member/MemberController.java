@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import night.aslan.auth.Form.ResponseForm;
 import night.aslan.auth.email.EmailUtils;
+import night.aslan.auth.emailCertification.cert.CertDto;
 import night.aslan.auth.member.Dto.MemberLoginDto;
 import night.aslan.auth.member.Dto.MemberSignUpDto;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,13 @@ public class MemberController {
 
     @PostMapping("/mailtest")
     public Map<String, Object> sendMail(@RequestBody MemberLoginDto memberLoginDto) {
-        log.info("id={}",memberLoginDto.getMemberId());
+        log.info("id={}", memberLoginDto.getMemberId());
         return emailUtils.sendMail(memberLoginDto.getMemberId(), "emailTest 인증번호 발송", "test용 인증번호입니다. 1351531515151");
-    }}
+    }
+
+    @PostMapping("/create/cert-number")
+    public String sendCertNumber(@RequestBody CertDto certDto) {
+        return memberService.sendCertNumber(certDto);
+    }
+}
+

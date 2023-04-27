@@ -3,7 +3,13 @@ package night.aslan.auth.member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import night.aslan.auth.Form.ResponseForm;
+import night.aslan.auth.email.EmailUtils;
 import night.aslan.auth.email.EmailValidation;
+import night.aslan.auth.emailCertification.EmailCertificationEntity;
+import night.aslan.auth.emailCertification.EmailCertificationImplCustom;
+import night.aslan.auth.emailCertification.EmailCertificationRepository;
+import night.aslan.auth.emailCertification.cert.CertDto;
+import night.aslan.auth.emailCertification.cert.CertificationNumber;
 import night.aslan.auth.jwt.JwtTokenProvider;
 import night.aslan.auth.member.Dto.MemberLoginDto;
 import night.aslan.auth.member.Dto.MemberSignUpDto;
@@ -15,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,7 +34,10 @@ public class MemberService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final MemberCustomRepository memberCustomRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
+    private final EmailUtils emailUtils;
+    private final CertificationNumber certificationNumber;
+    private final EmailCertificationImplCustom emailCertificationImplCustom;
+    private final EmailCertificationRepository emailCertificationRepository;
 
     /**
      * 회원가입
@@ -96,6 +106,44 @@ public class MemberService implements UserDetailsService {
         return responseForm;
     }
 
+    //TODO: 인증 번호 생성 및 발송 서비스 생성
+    public String sendCertNumber(CertDto certDto) {
+        try {
+            int certCode = certificationNumber.createCertificationNumber();
+            EmailCertificationEntity emailCertificationEntity = new EmailCertificationEntity();
+            emailCertificationEntity.setEmailCertificationEmail(certDto.getMemberId());
+            emailCertificationEntity.setEmailCertificationNumber(certCode);
+            emailCertificationEntity.setEmailCertCreatedAt(LocalDateTime.now());
+            emailCertificationEntity.setEmailCertificationEnabled(false);
+            emailCertificationRepository.save(emailCertificationEntity);
+            emailUtils.sendMail(certDto.getMemberId(), "이메일 인증 번호입니다.", String.valueOf(certCode));
+            return "인증 번호가 발송되었습니다. 인증을 진행해 주세요";
+
+        } catch (Exception e) {
+            return "인증 메일 발송에 실패하였습니다. 다시 시도해 주세요";
+        }
+    }
+
+//    public String checkCertificationNumber() {
+//
+//    }
+
+    /**
+     * 비밀번호 확인 메서드
+     * @param dtoPwd
+     * @param memberPwd
+     * @return
+     */
+    public boolean passwordCheck(String dtoPwd,String memberPwd) {  //암호화된 비밀번호 일치 여부 확인
+        return passwordEncoder.matches(dtoPwd, memberPwd);
+    }
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
     //TOdo 해당 내용 따로 알아보기 - security 내용
     @Override       //security 때문
     public MemberEntity loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -123,10 +171,5 @@ public class MemberService implements UserDetailsService {
             return member;
         }
         return null;
-    }
-
-
-    public boolean passwordCheck(String dtoPwd,String memberPwd) {  //암호화된 비밀번호 일치 여부 확인
-        return passwordEncoder.matches(dtoPwd, memberPwd);
     }
 }

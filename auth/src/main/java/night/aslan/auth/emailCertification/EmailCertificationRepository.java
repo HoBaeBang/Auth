@@ -1,10 +1,10 @@
 package night.aslan.auth.emailCertification;
 
-import night.aslan.auth.member.Dto.MemberLoginDto;
 import night.aslan.auth.member.MemberEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+@Repository
+public interface EmailCertificationRepository extends JpaRepository<EmailCertificationEntity,Long> {
 
-public interface EmailCertificationRepository {
-    Optional<EmailCertificationEntity> findEmailCertById(Long id);
 }
