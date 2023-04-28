@@ -11,8 +11,7 @@ import night.aslan.auth.api.v1.email.EmailValidation;
 import night.aslan.auth.api.v1.email.emailCertification.EmailCertificationEntity;
 import night.aslan.auth.api.v1.email.emailCertification.EmailCertificationImplCustom;
 import night.aslan.auth.api.v1.email.emailCertification.EmailCertificationRepository;
-import night.aslan.auth.api.v1.email.emailCertification.cert.CertDto;
-import night.aslan.auth.api.v1.email.emailCertification.cert.CertificationNumber;
+import night.aslan.auth.api.v1.email.emailCertification.CertDto.CertDto;
 import night.aslan.auth.jwt.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +34,6 @@ public class MemberService implements UserDetailsService {
     private final MemberCustomRepository memberCustomRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final EmailUtils emailUtils;
-    private final CertificationNumber certificationNumber;
     private final EmailCertificationImplCustom emailCertificationImplCustom;
     private final EmailCertificationRepository emailCertificationRepository;
 
@@ -114,7 +112,7 @@ public class MemberService implements UserDetailsService {
      */
     public String sendCertNumber(CertDto certDto) {
         try {
-            int certCode = certificationNumber.createCertificationNumber();
+            int certCode = emailUtils.createCertificationNumber();
             EmailCertificationEntity emailCertificationEntity = new EmailCertificationEntity();
             emailCertificationEntity.setEmailCertificationEmail(certDto.getMemberId());
             emailCertificationEntity.setEmailCertificationNumber(certCode);
@@ -135,7 +133,7 @@ public class MemberService implements UserDetailsService {
      * @return
      */
     public String checkCertificationNumber(CertDto certDto) {
-        if (certificationNumber.checkCertificationNumber(certDto)) {
+        if (emailUtils.checkCertificationNumber(certDto)) {
             emailCertificationImplCustom.accessEmailCertification(certDto.getMemberId());
             return "인증에 성공하였습니다.";
         } else {

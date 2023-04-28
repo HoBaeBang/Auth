@@ -1,4 +1,4 @@
-package night.aslan.auth.api.v1.email.emailCertification.cert;
+package night.aslan.auth.api.v1.email.emailCertification.CertDto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
