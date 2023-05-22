@@ -40,6 +40,52 @@ public class MemberService implements UserDetailsService {
 
 
     /**
+     * 인증번호 발송 서비스
+     * @param certDto
+     * @return
+     */
+    public ResponseForm sendCertNumber(CertDto certDto) {
+        ResponseForm response = new ResponseForm();
+        try {
+            int certCode = emailUtils.createCertificationNumber();
+            EmailCertificationEntity emailCertificationEntity = new EmailCertificationEntity();
+            emailCertificationEntity.setEmailCertificationEmail(certDto.getMemberId());
+            emailCertificationEntity.setEmailCertificationNumber(certCode);
+            emailCertificationEntity.setEmailCertCreatedAt(LocalDateTime.now());
+            emailCertificationEntity.setEmailCertificationEnabled(false);
+            emailCertificationRepository.save(emailCertificationEntity);
+            String certEmailForm = certEmailFormat1 + String.valueOf(certCode) + certEmailFormat2;
+            emailUtils.sendMail(certDto.getMemberId(), "이메일 인증 번호입니다.", htmlform1+certEmailForm+htmlform2);
+            response.setHttpStatus(HttpStatus.OK);
+            response.setComment("인증 번호가 발송되었습니다. 인증을 진행해 주세요");
+        } catch (Exception e) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setComment("인증 메일 발송에 실패하였습니다. 다시 시도해 주세요");
+        }
+        return response;
+    }
+
+    /**
+     * 인증 번호 확인
+     * @param certDto
+     * @return
+     */
+    public ResponseForm checkCertificationNumber(CertDto certDto) {
+        ResponseForm result = new ResponseForm();
+        if (emailUtils.checkCertificationNumber(certDto)) {
+            emailCertificationImplCustom.accessEmailCertification(certDto.getMemberId());
+            result.setHttpStatus(HttpStatus.OK);
+            result.setResult(true);
+            result.setComment("인증에 성공하였습니다.");
+        } else {
+            result.setHttpStatus(HttpStatus.BAD_REQUEST);
+            result.setResult(false);
+            result.setComment("인증번호가 올바르지 않습니다.");
+        }
+        return result;
+    }
+
+    /**
      * 회원가입
      * @param memberSignUpDto
      * @return
@@ -108,51 +154,6 @@ public class MemberService implements UserDetailsService {
         return responseForm;
     }
 
-    /**
-     * 인증번호 발송 서비스
-     * @param certDto
-     * @return
-     */
-    public ResponseForm sendCertNumber(CertDto certDto) {
-        ResponseForm response = new ResponseForm();
-        try {
-            int certCode = emailUtils.createCertificationNumber();
-            EmailCertificationEntity emailCertificationEntity = new EmailCertificationEntity();
-            emailCertificationEntity.setEmailCertificationEmail(certDto.getMemberId());
-            emailCertificationEntity.setEmailCertificationNumber(certCode);
-            emailCertificationEntity.setEmailCertCreatedAt(LocalDateTime.now());
-            emailCertificationEntity.setEmailCertificationEnabled(false);
-            emailCertificationRepository.save(emailCertificationEntity);
-            String certEmailForm = certEmailFormat1 + String.valueOf(certCode) + certEmailFormat2;
-            emailUtils.sendMail(certDto.getMemberId(), "이메일 인증 번호입니다.", htmlform1+certEmailForm+htmlform2);
-            response.setHttpStatus(HttpStatus.OK);
-            response.setComment("인증 번호가 발송되었습니다. 인증을 진행해 주세요");
-        } catch (Exception e) {
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            response.setComment("인증 메일 발송에 실패하였습니다. 다시 시도해 주세요");
-        }
-        return response;
-    }
-
-    /**
-     * 인증 번호 확인
-     * @param certDto
-     * @return
-     */
-    public ResponseForm checkCertificationNumber(CertDto certDto) {
-        ResponseForm result = new ResponseForm();
-        if (emailUtils.checkCertificationNumber(certDto)) {
-            emailCertificationImplCustom.accessEmailCertification(certDto.getMemberId());
-            result.setHttpStatus(HttpStatus.OK);
-            result.setResult(true);
-            result.setComment("인증에 성공하였습니다.");
-        } else {
-            result.setHttpStatus(HttpStatus.BAD_REQUEST);
-            result.setResult(false);
-            result.setComment("인증번호가 올바르지 않습니다.");
-        }
-        return result;
-    }
 
     /**
      * 비밀번호 확인 메서드

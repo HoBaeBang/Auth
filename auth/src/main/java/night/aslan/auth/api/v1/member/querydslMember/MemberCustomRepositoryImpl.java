@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import night.aslan.auth.api.v1.member.Dto.MemberLoginDto;
 import night.aslan.auth.api.v1.member.MemberEntity;
-import night.aslan.auth.member.QMemberEntity;
+import night.aslan.auth.api.v1.member.QMemberEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 

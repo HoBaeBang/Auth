@@ -46,6 +46,7 @@ public class MemberController {
     public String signup(@RequestBody MemberSignUpDto memberSignUpDto) {
         return memberService.signUp(memberSignUpDto);
     }
+
     //메일 전송 테스트
     @PostMapping("/mailtest")
     public Map<String, Object> sendMail(@RequestBody MemberLoginDto memberLoginDto) {
