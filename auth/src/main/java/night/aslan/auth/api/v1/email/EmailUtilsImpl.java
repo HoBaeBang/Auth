@@ -41,7 +41,6 @@ public class EmailUtilsImpl implements EmailUtils {
             e.printStackTrace();
             result.put("resultCode", 500);
         }
-        System.out.println("githook-test");
         sender.send(message);
         return result;
     }
